@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="us-elections",
-    version="0.0a1.dev1",
+    version="0.0a1.dev2",
     description="US elections metadata",
     url="https://github.com/The-Politico/us-elections",
     author="Jon McClure",
@@ -20,7 +20,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Topic :: Internet :: WWW/HTTP",
     ],
-    package_data={"elections": ["data/**/*.pkl"]},
+    package_data={"elections": ["data/**/*.pkl", "data/*.pkl"]},
     keywords="",
     packages=find_packages(exclude=["docs", "tests"]),
     install_requires=["us"],

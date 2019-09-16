@@ -1,10 +1,10 @@
 ![POLITICO](https://www.politico.com/interactives/cdn/images/badge.svg)
 
-[![PyPI version](https://badge.fury.io/py/us-elections.svg)](https://badge.fury.io/py/us-elections)
-
-# us-elections
+# us-elections 🇺🇸
 
 A package for working with US elections metadata. Like [python-us](https://github.com/unitedstates/python-us), but for elections!
+
+[![PyPI version](https://badge.fury.io/py/us-elections.svg)](https://badge.fury.io/py/us-elections)
 
 ### Quickstart
 
@@ -41,13 +41,15 @@ election_year.seats_for_state('TX')
 # [<HouseSeat: Texas U.S. House seat, 1st district>, ... ]
 ```
 
+*More TK...*
+
 ### Contributing data
 
 1. Add data to a CSV in the `db/` directory.
 2. `$ python build.py`
 3. Submit a pull request!
 
-### Prior art
+### Influences
 
 This project heavily borrows its software design from [python-us](https://github.com/unitedstates/python-us).
 
