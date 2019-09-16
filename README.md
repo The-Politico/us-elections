@@ -1,5 +1,7 @@
 ![POLITICO](https://www.politico.com/interactives/cdn/images/badge.svg)
 
+[![PyPI version](https://badge.fury.io/py/us-elections.svg)](https://badge.fury.io/py/us-elections)
+
 # us-elections
 
 A package for working with US elections metadata. Like [python-us](https://github.com/unitedstates/python-us), but for elections!
