@@ -57,7 +57,7 @@ class ElectionYear(object):
             )
             if holding_party:
                 holding_party.add_held_seat(seat)
-                seat.party = holding_party
+                seat.incumbent_party = holding_party
         # filter out parties that don't hold any seats
         self.incumbent_parties = list(
             filter(lambda d: d.holds_seats, self.incumbent_parties)

@@ -12,6 +12,10 @@ A package for working with US elections metadata. Like [python-us](https://githu
 $ pip install us-elections
 ```
 
+### Classes
+
+#### `ElectionYear`
+
 ```python
 from elections import ElectionYear
 
@@ -41,12 +45,92 @@ election_year.seats_for_state('TX')
 # [<HouseSeat: Texas U.S. House seat, 1st district>, ... ]
 ```
 
-*More TK...*
+#### `SenateSeat`
+
+```python
+from elections import ElectionYear
+
+seat = election_year.seats.senate[0]
+
+seat.state
+# <State:Arizona>
+
+seat.incumbent
+# 'Flake, Jeff'
+
+seat.incumbent_party
+# <Party: Republican Party>
+
+seat.senate_class
+# 'I'
+
+# etc.
+```
+
+#### `HouseSeat`
+
+```python
+from elections import ElectionYear
+
+seat = election_year.seats.senate[0]
+
+seat.state
+# <State:Alaska>
+
+seat.district
+#
+
+seat.district_name
+# 'at-large district'
+
+seat.incumbent
+# 'Young, Don'
+
+seat.incumbent_party
+# <Party: Republican Party>
+
+# etc.
+```
+#### `GeneralElection`
+
+```python
+election = election_year.elections.general[0]
+
+election.state
+# <State:Alabama>
+
+election.election_date
+# datetime.datetime(2018, 11, 6, 0, 0)
+
+election.registration_deadline
+# datetime.datetime(2018, 10, 22, 0, 0)
+
+# etc.
+```
+#### `PrimaryElection`
+
+```python
+election = election_year.elections.primary[0]
+
+election.state
+# <State:Alabama>
+
+election.election_date
+# datetime.datetime(2018, 6, 5, 0, 0)
+
+election.gop_election_type
+# 'open'
+
+election.runoff_election_date
+# datetime.datetime(2018, 7, 17, 0, 0)
+
+# etc.
+```
 
 ### Contributing data
 
-1. Add data to a CSV in the `db/` directory.
-2. `$ python build.py`
+1. Add data to one of the CSVs in the `db/` directory.
+2. Build the package data files: `$ python build.py`
 3. Submit a pull request!
 
 ### Influences
