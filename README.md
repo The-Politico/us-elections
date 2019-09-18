@@ -50,6 +50,7 @@ election_year.seats_for_state('TX')
 ```python
 from elections import ElectionYear
 
+election_year = ElectionYear(2018)
 seat = election_year.seats.senate[0]
 
 seat.state
@@ -72,6 +73,7 @@ seat.senate_class
 ```python
 from elections import ElectionYear
 
+election_year = ElectionYear(2018)
 seat = election_year.seats.senate[0]
 
 seat.state
@@ -94,6 +96,9 @@ seat.incumbent_party
 #### `GeneralElection`
 
 ```python
+from elections import ElectionYear
+
+election_year = ElectionYear(2018)
 election = election_year.elections.general[0]
 
 election.state
@@ -110,6 +115,9 @@ election.registration_deadline
 #### `PrimaryElection`
 
 ```python
+from elections import ElectionYear
+
+election_year = ElectionYear(2018)
 election = election_year.elections.primary[0]
 
 election.state
