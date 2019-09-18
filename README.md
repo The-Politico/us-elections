@@ -143,7 +143,7 @@ election.runoff_election_date
 
 ### Influences
 
-This project heavily borrows its software design from [python-us](https://github.com/unitedstates/python-us).
+This project borrows most of its software design from [python-us](https://github.com/unitedstates/python-us).
 
 Its data models are also heavily inspired by the [DNC election data project](https://github.com/democrats/data).
 
