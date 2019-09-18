@@ -3,8 +3,14 @@ import pickle
 
 import us
 
-from elections.models.seats import HouseSeat, SenateSeat
 from elections.models.elections import GeneralElection, PrimaryElection
+from elections.models.seats import HouseSeat, SenateSeat
+from elections.models.parties import Party
+from elections.utils.getters import get_party
+from elections.utils.builts import (
+    ChamberFilterableList,
+    ElectionTypeFilterableList,
+)
 
 PWD = os.path.abspath(os.path.dirname(__file__))
 
@@ -17,43 +23,10 @@ def load_years():
     from pkg_resources import resource_stream
 
     years = []
-    # load state data from pickle file
     with resource_stream(__name__, "data/years.pkl") as pklfile:
         for d in pickle.load(pklfile):
             years.append(d)
     return years
-
-
-def load_seats(year):
-    from pkg_resources import resource_stream
-
-    seats = []
-    # load state data from pickle file
-    with resource_stream(
-        __name__, "data/{}/seats.pkl".format(year)
-    ) as pklfile:
-        for d in pickle.load(pklfile):
-            if d["seat_type"] == "house":
-                seats.append(HouseSeat(**d))
-            elif d["seat_type"] == "senate":
-                seats.append(SenateSeat(**d))
-    return seats
-
-
-def load_elections(year):
-    from pkg_resources import resource_stream
-
-    elections = []
-    # load state data from pickle file
-    with resource_stream(
-        __name__, "data/{}/elections.pkl".format(year)
-    ) as pklfile:
-        for d in pickle.load(pklfile, encoding="latin1"):
-            if d["election_type"] == "general":
-                elections.append(GeneralElection(**d))
-            elif d["election_type"] == "primary":
-                elections.append(PrimaryElection(**d))
-    return elections
 
 
 class ElectionYear(object):
@@ -64,39 +37,73 @@ class ElectionYear(object):
                 "No data available for the {} election cycle".format(year)
             )
         self.year = year
-        self.seats = load_seats(year)
-        self.elections = load_elections(year)
+        self.incumbent_parties = self.load_parties()
+        self.seats = self.load_seats()
+        self.elections = self.load_elections()
 
-    @property
-    def general_elections(self):
-        return [
-            election
-            for election in self.elections
-            if isinstance(election, GeneralElection)
-        ]
+    def load_parties(self):
+        from pkg_resources import resource_stream
 
-    @property
-    def primary_elections(self):
-        return [
-            election
-            for election in self.elections
-            if isinstance(election, PrimaryElection)
-        ]
+        parties = []
+        with resource_stream(__name__, "data/parties.pkl") as pklfile:
+            for d in pickle.load(pklfile):
+                parties.append(Party(**d))
+        return parties
 
-    @property
-    def senate_seats(self):
-        return [seat for seat in self.seats if isinstance(seat, SenateSeat)]
+    def assign_parties_to_seats(self, seats):
+        for seat in seats:
+            holding_party = get_party(
+                getattr(seat, "incumbent_party", None), self.incumbent_parties
+            )
+            if holding_party:
+                holding_party.add_held_seat(seat)
+                seat.party = holding_party
+        # filter out parties that don't hold any seats
+        self.incumbent_parties = list(
+            filter(lambda d: d.holds_seats, self.incumbent_parties)
+        )
+        return seats
 
-    @property
-    def house_seats(self):
-        return [seat for seat in self.seats if isinstance(seat, HouseSeat)]
+    def load_seats(self):
+        from pkg_resources import resource_stream
+
+        seats = ChamberFilterableList()
+        with resource_stream(
+            __name__, "data/{}/seats.pkl".format(self.year)
+        ) as pklfile:
+            for d in pickle.load(pklfile):
+                if d["seat_type"] == "house":
+                    seats.append(HouseSeat(**d))
+                elif d["seat_type"] == "senate":
+                    seats.append(SenateSeat(**d))
+        return self.assign_parties_to_seats(seats)
+
+    def load_elections(self):
+        from pkg_resources import resource_stream
+
+        elections = ElectionTypeFilterableList()
+        with resource_stream(
+            __name__, "data/{}/elections.pkl".format(self.year)
+        ) as pklfile:
+            for d in pickle.load(pklfile, encoding="latin1"):
+                if d["election_type"] == "general":
+                    elections.append(GeneralElection(**d))
+                elif d["election_type"] == "primary":
+                    elections.append(PrimaryElection(**d))
+        return elections
 
     def seats_for_state(self, state):
         state = us.states.lookup(state)
-        return [seat for seat in self.seats if seat.state == state]
+        return ChamberFilterableList(
+            [seat for seat in self.seats if seat.state == state]
+        )
 
     def elections_for_state(self, state):
         state = us.states.lookup(state)
-        return [
-            election for election in self.elections if election.state == state
-        ]
+        return ElectionTypeFilterableList(
+            [
+                election
+                for election in self.elections
+                if election.state == state
+            ]
+        )

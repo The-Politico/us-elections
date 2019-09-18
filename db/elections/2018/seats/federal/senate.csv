@@ -1,0 +1,34 @@
+state,senate_class,special,incumbent,incumbent_party
+AZ,I,FALSE,"Flake, Jeff",gop
+CA,I,FALSE,"Feinstein, Dianne",dem
+CT,I,FALSE,"Murphy, Chris",dem
+DE,I,FALSE,"Carper, Tom",dem
+HI,I,FALSE,"Hirono, Mazie",dem
+IN,I,FALSE,"Donnelly, Joe",dem
+MA,I,FALSE,"Warren, Elizabeth",dem
+MD,I,FALSE,"Cardin, Ben",dem
+ME,I,FALSE,"King, Angus",ind
+MN,I,FALSE,"Klobuchar, Amy",dem
+MO,I,FALSE,"McCaskill, Claire",dem
+MS,I,FALSE,"Wicker, Roger",gop
+MT,I,FALSE,"Tester, Jon",dem
+ND,I,FALSE,"Heitkamp, Heidi",dem
+FL,I,FALSE,"Nelon, Bill",dem
+MI,I,FALSE,"Stabenow, Debbie",dem
+NE,I,FALSE,"Fischer, Deb",gop
+NJ,I,FALSE,"Menendez, Bob",dem
+NM,I,FALSE,"Heinrich, Martin",dem
+NV,I,FALSE,"Heller, Dean",dem
+NY,I,FALSE,"Gillibrand, Kirsten",dem
+OH,I,FALSE,"Brown, Sherrod",dem
+PA,I,FALSE,"Casey Jr., Bob",dem
+RI,I,FALSE,"Whitehouse, Sheldon",dem
+TN,I,FALSE,"Corker, Bob",gop
+TX,I,FALSE,"Cruz, Ted",gop
+UT,I,FALSE,"Hatch, Orrin",gop
+VA,I,FALSE,"Kaine, Tim",dem
+VT,I,FALSE,"Sanders, Bernie",ind
+WA,I,FALSE,"Cantwell, Maria",dem
+WI,I,FALSE,"Baldwin, Tammy",dem
+WV,I,FALSE,"Manchin, Joe",dem
+WY,I,FALSE,"Barrasso, John",dem

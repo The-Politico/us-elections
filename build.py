@@ -5,10 +5,11 @@ from datetime import datetime
 
 PWD = os.path.abspath(os.path.dirname(__file__))
 DB = os.path.join(PWD, "db")
+ELECTIONS_DIR = os.path.join(DB, "elections")
 PKL_DIR = os.path.join(PWD, "elections/data/")
 
 # GET YEARS
-YEARS = list(os.walk(DB))[0][1]
+YEARS = list(os.walk(ELECTIONS_DIR))[0][1]
 
 
 def read_csv_to_dict(path):
@@ -26,9 +27,11 @@ def cast_dates(obj):
 
 def cast_bools(obj):
     for key in obj:
-        if obj[key] == "false":
+        if not obj[key] or type(obj[key]) != "str":
+            continue
+        if obj[key].lower() == "false":
             obj[key] = False
-        if obj[key] == "true":
+        if obj[key].lower() == "true":
             obj[key] = True
     return obj
 
@@ -47,6 +50,15 @@ def cast_types(obj):
     return obj
 
 
+def pickle_parties():
+    parties = [
+        cast_types(party)
+        for party in read_csv_to_dict(os.path.join(DB, "parties/parties.csv"))
+    ]
+    with open(os.path.join(PKL_DIR, "parties.pkl"), "wb") as pkl_file:
+        pickle.dump(parties, pkl_file, protocol=2)
+
+
 def pickle_years():
     with open(os.path.join(PKL_DIR, "years.pkl"), "wb") as pkl_file:
         pickle.dump(YEARS, pkl_file, protocol=2)
@@ -55,7 +67,7 @@ def pickle_years():
 def pickle_seats():
     for YEAR in YEARS:
         seats = []
-        seat_dir = os.path.join(DB, YEAR, "seats")
+        seat_dir = os.path.join(ELECTIONS_DIR, YEAR, "seats")
         jurisdiction = ""
         for path, dirs, files in os.walk(seat_dir):
             if len(dirs) == 0:
@@ -81,7 +93,7 @@ def pickle_seats():
 def pickle_elections():
     for YEAR in YEARS:
         elections = []
-        election_dir = os.path.join(DB, YEAR, "calendars")
+        election_dir = os.path.join(ELECTIONS_DIR, YEAR, "calendars")
         jurisdiction = ""
         for path, dirs, files in os.walk(election_dir):
             if len(dirs) == 0:
@@ -105,6 +117,7 @@ def pickle_elections():
 
 
 def pickle_data():
+    pickle_parties()
     pickle_years()
     pickle_seats()
     pickle_elections()

@@ -21,16 +21,16 @@ election_year = ElectionYear(2018)
 election_year.elections
 # [<GeneralElection: Alabama Nov. 06, 2018>, ... ]
 
-election_year.general_elections
-election_year.primary_elections
+election_year.elections.general
+election_year.elections.primary
 
 
 # GET SEATS UP FOR ELECTION
 election_year.seats
 # [<HouseSeat: Alaska U.S. House seat, at-large district>, ... ]
 
-election_year.senate_seats
-election_year.house_seats
+election_year.seats.senate
+election_year.seats.house
 
 
 # FILTER BY STATE
@@ -58,5 +58,6 @@ Its data models are also heavily inspired by the [DNC election data project](htt
 ### Testing
 
 ```
-$ pytest
+$ pipenv install -d
+$ pipenv run pytest
 ```

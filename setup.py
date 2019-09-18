@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="us-elections",
-    version="0.0a1.dev2",
+    version="0.0.1",
     description="US elections metadata",
     url="https://github.com/The-Politico/us-elections",
     author="Jon McClure",
