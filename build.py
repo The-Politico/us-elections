@@ -27,12 +27,13 @@ def cast_dates(obj):
 
 def cast_bools(obj):
     for key in obj:
-        if not obj[key] or type(obj[key]) != "str":
-            continue
-        if obj[key].lower() == "false":
-            obj[key] = False
-        if obj[key].lower() == "true":
-            obj[key] = True
+        if type(obj[key]) == str:
+            if obj[key].lower() == "false":
+                obj[key] = False
+                return obj
+            if obj[key].lower() == "true":
+                obj[key] = True
+                return obj
     return obj
 
 

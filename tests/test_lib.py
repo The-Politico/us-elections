@@ -46,6 +46,7 @@ def test_senate_seat():
     assert seat.incumbent == "Flake, Jeff"
     assert seat.incumbent_party.name == "Republican Party"
     assert seat.senate_class == "I"
+    assert seat.special is False
 
 
 def test_house_seat():
