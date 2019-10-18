@@ -6,11 +6,13 @@ A package for working with US elections metadata. Like [python-us](https://githu
 
 [![PyPI version](https://badge.fury.io/py/us-elections.svg)](https://badge.fury.io/py/us-elections)
 
+
 ### Quickstart
 
 ```
 $ pip install us-elections
 ```
+
 
 ### Classes
 
@@ -19,9 +21,13 @@ $ pip install us-elections
 ```python
 from elections import ElectionYear
 
-election_year = ElectionYear(2018)
 
-# GET ELECTIONS IN THIS YEAR
+# GET A SPECIFIC YEAR'S ELECTIONS AND DATA:
+election_year = ElectionYear(2018)
+# <ElectionYear: 2020 (Presidential election cycle)>
+
+
+# GET ELECTIONS IN THIS YEAR:
 election_year.elections
 # [<GeneralElection: Alabama Nov. 06, 2018>, ... ]
 
@@ -29,21 +35,47 @@ election_year.elections.general
 election_year.elections.primary
 
 
-# GET SEATS UP FOR ELECTION
-election_year.seats
+# GET GOVERNMENTS BY LEVEL:
+election_year.federal
+# <FederalGovernment: United States of America>
+
+election_year.states
+# [<StateGovernment: Alabama>, <StateGovernment: Alaska>, ... ]
+
+eyr.states.alabama
+eyr.states.new_jersey
+
+
+# GET A BRANCH WITHIN A GOVERNMENT:
+election_year.federal.legislative
+# <Branch: United States Federal Government legislative Branch>
+
+election_year.states.alaska.executive
+# <Executive Branch: Alaska State Government>
+
+
+# GET SEATS UP FOR ELECTION:
+election_year.federal.legislative.seats
 # [<HouseSeat: Alaska U.S. House seat, at-large district>, ... ]
 
-election_year.seats.senate
-election_year.seats.house
+election_year.states.alaska.executive.seats
+# [<ExecutiveSeat: Alaska Governor>, ... ]
+
+election_year.seats.federal.senate
+election_year.seats.federal.house
 
 
-# FILTER BY STATE
+# FILTER BY STATE:
 election_year.elections_for_state('TX')
 # [<GeneralElection: Texas Nov. 06, 2018>, ... ]
 
-election_year.seats_for_state('TX')
+election_year.federal.legislative.seats_for_state('TX')
 # [<HouseSeat: Texas U.S. House seat, 1st district>, ... ]
+
+election_year.federal.legislative.seats_for_state('TX').senate
+# [<SenateSeat: Texas U.S. Senate seat, class I>]
 ```
+
 
 #### `SenateSeat`
 
@@ -51,7 +83,7 @@ election_year.seats_for_state('TX')
 from elections import ElectionYear
 
 election_year = ElectionYear(2018)
-seat = election_year.seats.senate[0]
+seat = election_year.federal.legislative.seats.senate[0]
 
 seat.state
 # <State:Arizona>
@@ -68,13 +100,14 @@ seat.senate_class
 # etc.
 ```
 
+
 #### `HouseSeat`
 
 ```python
 from elections import ElectionYear
 
 election_year = ElectionYear(2018)
-seat = election_year.seats.senate[0]
+seat = election_year.federal.legislative.seats.house[0]
 
 seat.state
 # <State:Alaska>
@@ -93,6 +126,8 @@ seat.incumbent_party
 
 # etc.
 ```
+
+
 #### `GeneralElection`
 
 ```python
@@ -112,6 +147,8 @@ election.registration_deadline
 
 # etc.
 ```
+
+
 #### `PrimaryElection`
 
 ```python
@@ -135,17 +172,20 @@ election.runoff_election_date
 # etc.
 ```
 
+
 ### Contributing data
 
 1. Add data to one of the CSVs in the `db/` directory.
 2. Build the package data files: `$ python build.py`
 3. Submit a pull request!
 
+
 ### Influences
 
 This project borrows most of its software design from [python-us](https://github.com/unitedstates/python-us).
 
 Its data models are also heavily inspired by the [DNC election data project](https://github.com/democrats/data).
+
 
 ### Testing
 

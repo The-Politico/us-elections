@@ -1,4 +1,8 @@
+# Imports from other dependencies.
 import us
+
+
+# Imports from us-elections.
 from elections.utils.formatters import ordinalize
 
 
