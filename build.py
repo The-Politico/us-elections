@@ -1,7 +1,13 @@
-import os
-import pickle
+# Imports from python.
 import csv
 from datetime import datetime
+import os
+import pickle
+
+
+# Imports from other dependencies.
+import us
+
 
 PWD = os.path.abspath(os.path.dirname(__file__))
 DB = os.path.join(PWD, "db")
@@ -65,28 +71,81 @@ def pickle_years():
         pickle.dump(YEARS, pkl_file, protocol=2)
 
 
-def pickle_seats():
+def pickle_electoral_votes():
+    for YEAR in YEARS:
+        vote_zones = []
+        electoral_votes_for_year = os.path.join(
+            ELECTIONS_DIR, YEAR, "electoral-votes.csv"
+        )
+
+        if os.path.exists(electoral_votes_for_year):
+            votes_data = read_csv_to_dict(electoral_votes_for_year)
+            for vote_zone in votes_data:
+                vote_zone = cast_types(vote_zone)
+                vote_zone["type"] = (
+                    "by-district" if vote_zone["district"] else "statewide"
+                )
+                vote_zones.append(vote_zone)
+
+        os.makedirs(os.path.join(PKL_DIR, YEAR), exist_ok=True)
+        with open(
+            os.path.join(PKL_DIR, "{}/electoral-votes.pkl".format(YEAR)), "wb"
+        ) as pkl_file:
+            pickle.dump(vote_zones, pkl_file, protocol=2)
+
+
+def pickle_seats_for_body(government_level, chosen_branch):
+    if isinstance(government_level, str):
+        government_level = [government_level]
+
     for YEAR in YEARS:
         seats = []
-        seat_dir = os.path.join(ELECTIONS_DIR, YEAR, "seats")
-        jurisdiction = ""
-        for path, dirs, files in os.walk(seat_dir):
-            if len(dirs) == 0:
+        seat_dir_for_level = os.path.join(
+            ELECTIONS_DIR, YEAR, "seats", *government_level
+        )
+
+        for path, dirs, files in os.walk(seat_dir_for_level):
+            path_parts = path.split(os.path.sep)
+            level_components = path_parts[-len(government_level) :]
+
+            if len(dirs) == 0 and chosen_branch == path_parts[-1]:
                 for file in files:
                     seat_type = file.replace(".csv", "")
                     seats_data = read_csv_to_dict(os.path.join(path, file))
                     for seat in seats_data:
                         seat = cast_types(seat)
-                        seat["jurisdiction"] = jurisdiction
+                        seat["jurisdiction"] = "/".join(government_level)
                         seat["seat_type"] = seat_type
                         seats.append(seat)
-                jurisdiction = ""
+            elif len(dirs) == 0 and level_components == government_level:
+                branch_singleton_file = None
+                for file in files:
+                    file_name = file.replace(".csv", "")
+                    if file_name == chosen_branch:
+                        branch_singleton_file = file
+
+                if branch_singleton_file:
+                    seats_data = read_csv_to_dict(
+                        os.path.join(path, branch_singleton_file)
+                    )
+                    for seat in seats_data:
+                        seat = cast_types(seat)
+                        seat["jurisdiction"] = "/".join(government_level)
+                        seats.append(seat)
+                else:
+                    pass
             else:
-                jurisdiction = dirs[0]
+                pass
 
         os.makedirs(os.path.join(PKL_DIR, YEAR), exist_ok=True)
         with open(
-            os.path.join(PKL_DIR, "{}/seats.pkl".format(YEAR)), "wb"
+            os.path.join(
+                PKL_DIR,
+                "{}/{}-{}-seats.pkl".format(
+                    YEAR, government_level[-1], chosen_branch
+                ),
+            ),
+            "wb",
         ) as pkl_file:
             pickle.dump(seats, pkl_file, protocol=2)
 
@@ -120,7 +179,18 @@ def pickle_elections():
 def pickle_data():
     pickle_parties()
     pickle_years()
-    pickle_seats()
+
+    pickle_electoral_votes()
+
+    pickle_seats_for_body("federal", "legislative")
+    pickle_seats_for_body("federal", "executive")
+
+    for state in us.STATES:
+        if state.statehood_year:  # Taxation w/o representation! Nix D.C.
+            pickle_seats_for_body(["state", state.abbr.lower()], "legislative")
+            pickle_seats_for_body(["state", state.abbr.lower()], "executive")
+            pickle_seats_for_body(["state", state.abbr.lower()], "judicial")
+
     pickle_elections()
 
 
