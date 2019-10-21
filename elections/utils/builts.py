@@ -83,7 +83,8 @@ class ElectoralVoteFilterableList(list):
             setattr(
                 self,
                 "{}_{}_district".format(
-                    state_slug, TO_WORD_ORDINALS[electoral_zone.district - 1]
+                    state_slug,
+                    TO_WORD_ORDINALS[int(electoral_zone.district) - 1],
                 ),
                 electoral_zone,
             )

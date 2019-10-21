@@ -14,7 +14,7 @@ class ElectoralZone(object):
             if k == "state":
                 self.__dict__[k] = us.states.lookup(v)
             elif k == "district" and v:
-                self.__dict__[k] = int(v)
+                self.__dict__[k] = v
             elif k == "elector_count":
                 self.__dict__[k] = int(v)
             else:
