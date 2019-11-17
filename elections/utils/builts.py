@@ -1,12 +1,37 @@
 # Imports from us-elections.
+from elections.models.elections import DemocraticPresidentialPrimaryElection
+from elections.models.elections import DemocraticPrimaryElection
+from elections.models.elections.primary_runoff import (
+    DemocraticPrimaryRunoffElection,
+)
 from elections.models.elections import GeneralElection
+from elections.models.elections import PresidentialPrimaryElection
 from elections.models.elections import PrimaryElection
+from elections.models.elections.primary_runoff import PrimaryRunoffElection
+from elections.models.elections import RepublicanPresidentialPrimaryElection
+from elections.models.elections import RepublicanPrimaryElection
+from elections.models.elections.primary_runoff import (
+    RepublicanPrimaryRunoffElection,
+)
 from elections.models.electoral_votes import DistrictElectoralZone
 from elections.models.electoral_votes import StateElectoralZone
 from elections.models.seats import HeadOfGovernmentSeat
 from elections.models.seats import HouseSeat
 from elections.models.seats import SenateSeat
 
+
+PARTISAN_ELECTION_TYPES = {
+    "democratic": {
+        "primary": DemocraticPrimaryElection,
+        "primary_runoff": DemocraticPrimaryRunoffElection,
+        "presidential_primary": DemocraticPresidentialPrimaryElection,
+    },
+    "republican": {
+        "primary": RepublicanPrimaryElection,
+        "primary_runoff": RepublicanPrimaryRunoffElection,
+        "presidential_primary": RepublicanPresidentialPrimaryElection,
+    },
+}
 
 TO_WORD_ORDINALS = ["first", "second", "third"]
 
@@ -55,9 +80,43 @@ class StateFilterableList(list):
         self.append(state_government_obj)
 
 
+class PartisanElectionFilterableList(list):
+    @property
+    def democratic(self):
+        return [
+            election
+            for election in self.__iter__()
+            if any(
+                [
+                    isinstance(election, Klass)
+                    for election_type, Klass in PARTISAN_ELECTION_TYPES[
+                        "democratic"
+                    ].items()
+                    if Klass
+                ]
+            )
+        ]
+
+    @property
+    def republican(self):
+        return [
+            election
+            for election in self.__iter__()
+            if any(
+                [
+                    isinstance(election, Klass)
+                    for election_type, Klass in PARTISAN_ELECTION_TYPES[
+                        "republican"
+                    ].items()
+                    if Klass
+                ]
+            )
+        ]
+
+
 class ElectionTypeFilterableList(list):
     @property
-    def general(self):
+    def general_elections(self):
         return [
             election
             for election in self.__iter__()
@@ -65,12 +124,34 @@ class ElectionTypeFilterableList(list):
         ]
 
     @property
-    def primary(self):
-        return [
-            election
-            for election in self.__iter__()
-            if isinstance(election, PrimaryElection)
-        ]
+    def primaries(self):
+        return PartisanElectionFilterableList(
+            [
+                election
+                for election in self.__iter__()
+                if isinstance(election, PrimaryElection)
+            ]
+        )
+
+    @property
+    def primary_runoffs(self):
+        return PartisanElectionFilterableList(
+            [
+                election
+                for election in self.__iter__()
+                if isinstance(election, PrimaryRunoffElection)
+            ]
+        )
+
+    @property
+    def presidential_primaries(self):
+        return PartisanElectionFilterableList(
+            [
+                election
+                for election in self.__iter__()
+                if isinstance(election, PresidentialPrimaryElection)
+            ]
+        )
 
 
 class ElectoralVoteFilterableList(list):
