@@ -9,7 +9,12 @@ import us
 # Imports from us-elections.
 from elections.exceptions import InvalidYear
 from elections.models.elections import GeneralElection
-from elections.models.elections import PrimaryElection
+from elections.models.elections import DemocraticPresidentialPrimaryElection
+from elections.models.elections import DemocraticPrimaryElection
+from elections.models.elections import DemocraticPrimaryRunoffElection
+from elections.models.elections import RepublicanPresidentialPrimaryElection
+from elections.models.elections import RepublicanPrimaryElection
+from elections.models.elections import RepublicanPrimaryRunoffElection
 from elections.models.electoral_votes import DistrictElectoralZone
 from elections.models.electoral_votes import StateElectoralZone
 from elections.models.governments.constants import LEGISLATIVE
@@ -231,7 +236,24 @@ class ElectionYear(object):
                 if d["election_type"] == "general":
                     elections.append(GeneralElection(**d))
                 elif d["election_type"] == "primary":
-                    elections.append(PrimaryElection(**d))
+                    if d["dem_election_date"] is not None:
+                        elections.append(DemocraticPrimaryElection(**d))
+                    if d["gop_election_date"]:
+                        elections.append(RepublicanPrimaryElection(**d))
+
+                    if d["dem_runoff_election_date"]:
+                        elections.append(DemocraticPrimaryRunoffElection(**d))
+                    if d["gop_runoff_election_date"]:
+                        elections.append(RepublicanPrimaryRunoffElection(**d))
+                elif d["election_type"] == "presidential_primary":
+                    if d["dem_election_date"] is not None:
+                        elections.append(
+                            DemocraticPresidentialPrimaryElection(**d)
+                        )
+                    if d["gop_election_date"]:
+                        elections.append(
+                            RepublicanPresidentialPrimaryElection(**d)
+                        )
         return elections
 
     def elections_for_state(self, state):
