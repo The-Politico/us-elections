@@ -2,9 +2,9 @@
 import us
 
 
-class PrimaryElection(object):
+class PresidentialPrimaryElection(object):
     party_prefix = None
-    repr_label = "PrimaryElection"
+    repr_label = "PresidentialPrimaryElection"
 
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
@@ -13,10 +13,7 @@ class PrimaryElection(object):
             elif k == "election_notes":
                 self.__dict__[k] = v
             elif self.party_prefix and k.startswith(self.party_prefix):
-                modified_field_name = k[len(self.party_prefix) :]
-
-                if not modified_field_name.startswith("runoff_"):
-                    self.__dict__[modified_field_name] = v
+                self.__dict__[k[len(self.party_prefix) :]] = v
 
     def __repr__(self):
         return "<{}: {}>".format(self.repr_label, self.__str__())
@@ -25,11 +22,11 @@ class PrimaryElection(object):
         return "{} {:%b. %d, %Y}".format(self.state.name, self.election_date)
 
 
-class DemocraticPrimaryElection(PrimaryElection):
+class DemocraticPresidentialPrimaryElection(PresidentialPrimaryElection):
     party_prefix = "dem_"
-    repr_label = "DemocraticPrimaryElection"
+    repr_label = "DemocraticPresidentialPrimaryElection"
 
 
-class RepublicanPrimaryElection(PrimaryElection):
+class RepublicanPresidentialPrimaryElection(PresidentialPrimaryElection):
     party_prefix = "gop_"
-    repr_label = "RepublicanPrimaryElection"
+    repr_label = "RepublicanPresidentialPrimaryElection"
