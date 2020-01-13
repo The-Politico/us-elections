@@ -9,10 +9,10 @@ import us
 # Imports from us-elections.
 from elections.exceptions import InvalidYear
 from elections.models.elections import GeneralElection
-from elections.models.elections import DemocraticPresidentialPrimaryElection
 from elections.models.elections import DemocraticPrimaryElection
 from elections.models.elections import DemocraticPrimaryRunoffElection
-from elections.models.elections import RepublicanPresidentialPrimaryElection
+from elections.models.elections import PrimaryElection
+from elections.models.elections import PrimaryRunoffElection
 from elections.models.elections import RepublicanPrimaryElection
 from elections.models.elections import RepublicanPrimaryRunoffElection
 from elections.models.electoral_votes import DistrictElectoralZone
@@ -47,6 +47,9 @@ def load_years():
         for d in pickle.load(pklfile):
             years.append(d)
     return years
+
+
+CHAMBER_ORDER = ["senate", "house"]
 
 
 class ElectionYear(object):
@@ -127,7 +130,7 @@ class ElectionYear(object):
         return seats
 
     def load_federal_legislative_seats(self):
-        seats = ChamberFilterableList()
+        seats = []
         with load_pickled_data(
             "data/{}/federal-legislative-seats.pkl".format(self.year)
         ) as pklfile:
@@ -136,7 +139,24 @@ class ElectionYear(object):
                     seats.append(HouseSeat(**d))
                 elif d["seat_type"] == "senate":
                     seats.append(SenateSeat(**d))
-        return self.assign_parties_to_seats(seats)
+
+        sorted_seats = sorted(
+            seats,
+            key=lambda x: int(getattr(x, "district", "0"))
+            if hasattr(x, "district") and x.district is not None
+            else 0,
+        )
+        sorted_seats = sorted(
+            sorted_seats, key=lambda x: len(getattr(x, "senate_class", "IIII"))
+        )
+        sorted_seats = sorted(sorted_seats, key=lambda x: x.state.name)
+        sorted_seats = sorted(
+            sorted_seats, key=lambda x: CHAMBER_ORDER.index(x.seat_type)
+        )
+
+        return self.assign_parties_to_seats(
+            ChamberFilterableList(sorted_seats)
+        )
 
     def load_federal_executive_seats(self):
         seats = ExecutiveSeatFilterableList()
@@ -202,7 +222,7 @@ class ElectionYear(object):
         return state_list
 
     def load_state_legislative_seats(self, state_abbr):
-        seats = ChamberFilterableList()
+        seats = []
         with load_pickled_data(
             "data/{}/{}-legislative-seats.pkl".format(self.year, state_abbr)
         ) as pklfile:
@@ -212,7 +232,13 @@ class ElectionYear(object):
                 elif d["seat_type"] == "senate":
                     seats.append(SenateSeat(**d))
 
-        return self.assign_parties_to_seats(seats)
+        sorted_seats = sorted(
+            seats, key=lambda x: CHAMBER_ORDER.index(x.seat_type)
+        )
+
+        return self.assign_parties_to_seats(
+            ChamberFilterableList(sorted_seats)
+        )
 
     def load_state_executive_seats(self, state_abbr):
         seats = ExecutiveSeatFilterableList()
@@ -228,7 +254,8 @@ class ElectionYear(object):
         return self.assign_parties_to_seats(seats)
 
     def load_elections(self):
-        elections = ElectionTypeFilterableList()
+        elections = []
+
         with load_pickled_data(
             "data/{}/elections.pkl".format(self.year)
         ) as pklfile:
@@ -236,25 +263,32 @@ class ElectionYear(object):
                 if d["election_type"] == "general":
                     elections.append(GeneralElection(**d))
                 elif d["election_type"] == "primary":
-                    if d["dem_election_date"] is not None:
-                        elections.append(DemocraticPrimaryElection(**d))
-                    if d["gop_election_date"]:
-                        elections.append(RepublicanPrimaryElection(**d))
+                    if d["election_party"] == "dem":
+                        if d["election_date"] is not None:
+                            elections.append(DemocraticPrimaryElection(**d))
+                        if d["runoff_election_date"] is not None:
+                            elections.append(
+                                DemocraticPrimaryRunoffElection(**d)
+                            )
+                    elif d["election_party"] == "gop":
+                        if d["election_date"] is not None:
+                            elections.append(RepublicanPrimaryElection(**d))
+                        if d["runoff_election_date"] is not None:
+                            elections.append(
+                                RepublicanPrimaryRunoffElection(**d)
+                            )
+                    else:
+                        if d["election_date"] is not None:
+                            elections.append(PrimaryElection(**d))
+                        if d["runoff_election_date"] is not None:
+                            elections.append(PrimaryRunoffElection(**d))
 
-                    if d["dem_runoff_election_date"]:
-                        elections.append(DemocraticPrimaryRunoffElection(**d))
-                    if d["gop_runoff_election_date"]:
-                        elections.append(RepublicanPrimaryRunoffElection(**d))
-                elif d["election_type"] == "presidential_primary":
-                    if d["dem_election_date"] is not None:
-                        elections.append(
-                            DemocraticPresidentialPrimaryElection(**d)
-                        )
-                    if d["gop_election_date"]:
-                        elections.append(
-                            RepublicanPresidentialPrimaryElection(**d)
-                        )
-        return elections
+        sorted_elections = sorted(elections, key=lambda x: x.state.name)
+        sorted_elections = sorted(
+            sorted_elections, key=lambda x: x.election_date
+        )
+
+        return ElectionTypeFilterableList(sorted_elections)
 
     def elections_for_state(self, state):
         state = us.states.lookup(state)

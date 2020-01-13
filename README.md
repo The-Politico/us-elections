@@ -14,25 +14,63 @@ $ pip install us-elections
 ```
 
 
-### Classes
-
-#### `ElectionYear`
+### Exploring election data
 
 ```python
 from elections import ElectionYear
 
 
 # GET A SPECIFIC YEAR'S ELECTIONS AND DATA:
-election_year = ElectionYear(2018)
-# <ElectionYear: 2020 (Presidential election cycle)>
+election_year = ElectionYear(2020)
+election_year
+# <ElectionYear: 2020 (Presidential cycle)>
 
 
 # GET ELECTIONS IN THIS YEAR:
 election_year.elections
-# [<GeneralElection: Alabama Nov. 06, 2018>, ... ]
+# [
+#   <DemocraticPrimaryElection: Iowa (Feb. 03, 2020)>,
+#   <RepublicanPrimaryElection: Iowa (Feb. 03, 2020)>,
+#   ...
+#   <GeneralElection: Alabama Nov. 03, 2020>,
+#   <GeneralElection: Alaska Nov. 03, 2020>,
+#   ...
+# ]
 
-election_year.elections.general
-election_year.elections.primary
+election_year.elections.primaries
+# [
+#   <DemocraticPrimaryElection: Iowa (Feb. 03, 2020)>,
+#   <RepublicanPrimaryElection: Iowa (Feb. 03, 2020)>,
+#   <DemocraticPrimaryElection: New Hampshire (Feb. 11, 2020)>,
+#   <RepublicanPrimaryElection: New Hampshire (Feb. 11, 2020)>,
+#   ...
+# ]
+
+election_year.elections.primaries.republican
+# [
+#   <RepublicanPrimaryElection: Iowa (Feb. 03, 2020)>,
+#   <RepublicanPrimaryElection: New Hampshire (Feb. 11, 2020)>,
+#   <RepublicanPrimaryElection: Alabama (Mar. 03, 2020)>,
+#   <RepublicanPrimaryElection: Arkansas (Mar. 03, 2020)>,
+#   ...
+# ]
+
+election_year.elections.general_elections
+# [
+#   <GeneralElection: Alabama (Nov. 03, 2020)>,
+#   <GeneralElection: Alaska (Nov. 03, 2020)>,
+#   <GeneralElection: Arizona (Nov. 03, 2020)>,
+#   <GeneralElection: Arkansas (Nov. 03, 2020)>,
+#   ...
+# ]
+
+
+# You can also filter by type of primary:
+
+# election_year.elections.presidential_primaries
+# election_year.elections.presidential_primaries.democratic
+# election_year.elections.downticket_primaries
+# election_year.elections.downticket_primaries.republican
 
 
 # GET GOVERNMENTS BY LEVEL:
@@ -40,137 +78,157 @@ election_year.federal
 # <FederalGovernment: United States of America>
 
 election_year.states
-# [<StateGovernment: Alabama>, <StateGovernment: Alaska>, ... ]
+# [
+#   <StateGovernment: Alabama>,
+#   <StateGovernment: Alaska>,
+#   <StateGovernment: Arizona>,
+#   <StateGovernment: Arkansas>,
+#   ...
+# ]
 
-eyr.states.alabama
-eyr.states.new_jersey
+election_year.states.alabama
+# <StateGovernment: Alabama>
+
+election_year.states.new_jersey
+# <StateGovernment: New Jersey>
 
 
 # GET A BRANCH WITHIN A GOVERNMENT:
 election_year.federal.legislative
-# <Branch: United States Federal Government legislative Branch>
+# <LegislativeBranch: U.S. Congress>
 
-election_year.states.alaska.executive
-# <Executive Branch: Alaska State Government>
+election_year.states.delaware.executive
+# <ExecutiveBranch: Delaware>
 
 
 # GET SEATS UP FOR ELECTION:
 election_year.federal.legislative.seats
-# [<HouseSeat: Alaska U.S. House seat, at-large district>, ... ]
+# [
+#   <HouseSeat: Alaska U.S. House seat, at-large district>,
+#   ...
+#   <SenateSeat: Alaska U.S. Senate seat, class II>,
+#   ...
+# ]
 
-election_year.states.alaska.executive.seats
-# [<ExecutiveSeat: Alaska Governor>, ... ]
+election_year.states.delaware.executive.seats
+# [
+#   <ExecutiveSeat: Delaware Governor>,
+#   <ExecutiveSeat: Delaware Lieutenant Governor>,
+#   ...
+# ]
 
-election_year.seats.federal.senate
-election_year.seats.federal.house
+
+# GET SEATS FROM A SPECIFIC LEGISLATIVE CHAMBER:
+election_year.federal.legislative.seats.senate
+# [
+#   <SenateSeat: Alabama U.S. Senate seat, class II>,
+#   <SenateSeat: Alaska U.S. Senate seat, class II>,
+#   <SenateSeat: Arizona U.S. Senate seat, class III>,
+#   <SenateSeat: Arkansas U.S. Senate seat, class II>,
+#   ...
+# ]
+
+election_year.federal.legislative.seats.house
+# [
+#   <HouseSeat: Alaska U.S. House seat, at-large district>,
+#   <HouseSeat: Alabama U.S. House seat, 1st district>,
+#   <HouseSeat: Alabama U.S. House seat, 2nd district>,
+#   <HouseSeat: Alabama U.S. House seat, 3rd district>,
+#   ...
+# ]
 
 
 # FILTER BY STATE:
 election_year.elections_for_state('TX')
-# [<GeneralElection: Texas Nov. 06, 2018>, ... ]
+# [
+#   <DemocraticPrimaryElection: Texas (Mar. 03, 2020)>,
+#   <RepublicanPrimaryElection: Texas (Mar. 03, 2020)>,
+#   <GeneralElection: Texas (Nov. 03, 2020)>
+# ]
 
 election_year.federal.legislative.seats_for_state('TX')
-# [<HouseSeat: Texas U.S. House seat, 1st district>, ... ]
+# [
+#   <SenateSeat: Texas U.S. Senate seat, class II>,
+#   <HouseSeat: Texas U.S. House seat, 1st district>,
+#   <HouseSeat: Texas U.S. House seat, 2nd district>,
+#   <HouseSeat: Texas U.S. House seat, 3rd district>,
+#   ...
+# ]
 
-election_year.federal.legislative.seats_for_state('TX').senate
-# [<SenateSeat: Texas U.S. Senate seat, class I>]
+election_year.federal.legislative.seats_for_state('GA').senate
+# [
+#   <SenateSeat: Georgia U.S. Senate seat, class II>,
+#   <SenateSeat: Georgia U.S. Senate seat, class III>
+# ]
 ```
 
+### Class-by-class reference
 
-#### `SenateSeat`
+#### `ElectionYear`
 
-```python
-from elections import ElectionYear
-
-election_year = ElectionYear(2018)
-seat = election_year.federal.legislative.seats.senate[0]
-
-seat.state
-# <State:Arizona>
-
-seat.incumbent
-# 'Flake, Jeff'
-
-seat.incumbent_party
-# <Party: Republican Party>
-
-seat.senate_class
-# 'I'
-
-# etc.
-```
+Model docs TK.
 
 
-#### `HouseSeat`
+#### `GovernmentLevel`
 
-```python
-from elections import ElectionYear
+**Variants:** `FederalGovernment` and `StateGovernment` (for now).
 
-election_year = ElectionYear(2018)
-seat = election_year.federal.legislative.seats.house[0]
-
-seat.state
-# <State:Alaska>
-
-seat.district
-#
-
-seat.district_name
-# 'at-large district'
-
-seat.incumbent
-# 'Young, Don'
-
-seat.incumbent_party
-# <Party: Republican Party>
-
-# etc.
-```
+Model docs TK.
 
 
-#### `GeneralElection`
+#### `GovernmentBranch`
 
-```python
-from elections import ElectionYear
+**Variants:** `LegislativeBranch` and  `ExecutiveBranch` (for now).
 
-election_year = ElectionYear(2018)
-election = election_year.elections.general[0]
-
-election.state
-# <State:Alabama>
-
-election.election_date
-# datetime.datetime(2018, 11, 6, 0, 0)
-
-election.registration_deadline
-# datetime.datetime(2018, 10, 22, 0, 0)
-
-# etc.
-```
+Model docs TK.
 
 
 #### `PrimaryElection`
 
-```python
-from elections import ElectionYear
+**Party-specific variants:** `DemocraticPrimaryElection` and `RepublicanPrimaryElection`.
 
-election_year = ElectionYear(2018)
-election = election_year.elections.primary[0]
+Model docs TK.
 
-election.state
-# <State:Alabama>
 
-election.election_date
-# datetime.datetime(2018, 6, 5, 0, 0)
+#### `PrimaryRunoffElection`
 
-election.gop_election_type
-# 'open'
+**Party-specific variants:** `DemocraticPrimaryRunoffElection` and `RepublicanPrimaryRunoffElection`.
 
-election.runoff_election_date
-# datetime.datetime(2018, 7, 17, 0, 0)
+Model docs TK.
 
-# etc.
-```
+
+#### `GeneralElection`
+
+Model docs TK.
+
+
+#### `ElectoralZone`
+
+**Variants:** `DistrictElectoralZone` and `StateElectoralZone`.
+
+Model docs TK.
+
+
+#### `SenateSeat`
+
+Model docs TK.
+
+
+#### `HouseSeat`
+
+ Model docs TK.
+
+
+#### `ExecutiveSeat`
+
+**Variants:** `HeadOfGovernmentSeat`.
+
+Model docs TK.
+
+
+#### `Party`
+
+Model docs TK.
 
 
 ### Contributing data

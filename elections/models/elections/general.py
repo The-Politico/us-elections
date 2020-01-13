@@ -14,4 +14,4 @@ class GeneralElection(object):
         return "<GeneralElection: {}>".format(self.__str__())
 
     def __str__(self):
-        return "{} {:%b. %d, %Y}".format(self.state.name, self.election_date)
+        return "{} ({:%b. %d, %Y})".format(self.state.name, self.election_date)

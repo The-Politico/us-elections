@@ -1,14 +1,11 @@
 # Imports from us-elections.
-from elections.models.elections import DemocraticPresidentialPrimaryElection
 from elections.models.elections import DemocraticPrimaryElection
 from elections.models.elections.primary_runoff import (
     DemocraticPrimaryRunoffElection,
 )
 from elections.models.elections import GeneralElection
-from elections.models.elections import PresidentialPrimaryElection
 from elections.models.elections import PrimaryElection
 from elections.models.elections.primary_runoff import PrimaryRunoffElection
-from elections.models.elections import RepublicanPresidentialPrimaryElection
 from elections.models.elections import RepublicanPrimaryElection
 from elections.models.elections.primary_runoff import (
     RepublicanPrimaryRunoffElection,
@@ -24,12 +21,10 @@ PARTISAN_ELECTION_TYPES = {
     "democratic": {
         "primary": DemocraticPrimaryElection,
         "primary_runoff": DemocraticPrimaryRunoffElection,
-        "presidential_primary": DemocraticPresidentialPrimaryElection,
     },
     "republican": {
         "primary": RepublicanPrimaryElection,
         "primary_runoff": RepublicanPrimaryRunoffElection,
-        "presidential_primary": RepublicanPresidentialPrimaryElection,
     },
 }
 
@@ -130,6 +125,7 @@ class ElectionTypeFilterableList(list):
                 election
                 for election in self.__iter__()
                 if isinstance(election, PrimaryElection)
+                and not isinstance(election, PrimaryRunoffElection)
             ]
         )
 
@@ -149,7 +145,24 @@ class ElectionTypeFilterableList(list):
             [
                 election
                 for election in self.__iter__()
-                if isinstance(election, PresidentialPrimaryElection)
+                if election.election_date.year % 4 == 0
+                and isinstance(election, PrimaryElection)
+                and not isinstance(election, PrimaryRunoffElection)
+                and getattr(election, "election_level", "")
+                in ["president", "all"]
+            ]
+        )
+
+    @property
+    def downticket_primaries(self):
+        return PartisanElectionFilterableList(
+            [
+                election
+                for election in self.__iter__()
+                if isinstance(election, PrimaryElection)
+                and not isinstance(election, PrimaryRunoffElection)
+                and getattr(election, "election_level", "all")
+                in ["all", "downticket"]
             ]
         )
 

@@ -5,6 +5,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- New `downticket_primaries` filter method to `ElectionTypeFilterableList`.
+- New shim for electoral areas that are not listed in the python-us library (for now, just "Democrats Abroad").
+
+### Changed
+- Further updates to 2020 primary election data, including merging presidential and other primaries to one file.
+- Reformat 2018 primary election data to feature one party and state's primary per line.
+- Sort lists of legislative seats by chamber (if any), state name, senate class (if any) and district number (if any).
+- Sort lists of elections by earliest to latest date, and then by state name.
+- Refactored how primary and primary-runoff election instances are created.
+- Updated `README.md` to reflect the latest API structure and output.
+
+### Removed
+- Separate data types for presidential primaries are no longer needed.
 
 ## [0.3.0] - 2020-01-12
 ### Added
