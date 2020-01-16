@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.1] - 2020-01-15
+### Changed
+- Year-by-year election calendars (at `./db/elections/<YYYY>/calendars/<level>/`) can now have a `meta.csv` containing metadata for all elections with the same state, day and election-variant. When present and on matching elections, the "notes" field in this `meta.csv` file will get added to the respective elections under the `election_day_notes` attribute.
+
 ## [0.4.0] - 2020-01-12
 ### Added
 - New `downticket_primaries` filter method to `ElectionTypeFilterableList`.
@@ -102,7 +106,8 @@ notable changes.
 - Initial documentation (``./docs/*``).
 - Additional root-level files, including `README.md`, `Pipfile` and `Pipfile.lock`, `Makefile` and `LICENSE`.
 
-[Unreleased]: https://github.com/The-Politico/us-elections/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/The-Politico/us-elections/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/The-Politico/us-elections/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/The-Politico/us-elections/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/The-Politico/us-elections/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/The-Politico/us-elections/compare/v0.1.1...v0.2.0
