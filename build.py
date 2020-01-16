@@ -157,11 +157,45 @@ def pickle_elections():
         jurisdiction = ""
         for path, dirs, files in os.walk(election_dir):
             if len(dirs) == 0:
+                try:
+                    per_day_metadata = {
+                        "__".join(
+                            [
+                                row["state"],
+                                row["election_date"],
+                                row["election_variant"],
+                            ]
+                        ): row["election_notes"]
+                        for row in read_csv_to_dict(
+                            os.path.join(path, "meta.csv")
+                        )
+                    }
+                except FileNotFoundError:
+                    per_day_metadata = {}
+
                 for file in files:
                     election_type = file.replace(".csv", "")
+
+                    if election_type == "meta":
+                        continue
+
                     elections_data = read_csv_to_dict(os.path.join(path, file))
                     for election in elections_data:
                         election = cast_types(election)
+
+                        election["election_day_notes"] = per_day_metadata.get(
+                            "__".join(
+                                [
+                                    election["state"],
+                                    election["election_date"].strftime(
+                                        "%Y-%m-%d"
+                                    ),
+                                    election.get("election_variant", ""),
+                                ]
+                            ),
+                            "",
+                        )
+
                         election["jurisdiction"] = jurisdiction
                         election["election_type"] = election_type
                         elections.append(election)
