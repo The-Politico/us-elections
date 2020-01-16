@@ -1,0 +1,23 @@
+state,election_date,election_variant,election_notes
+NV,2020-02-22,caucus,"Nevada will not hold a Republican presidential primary, meaning its 25 delegates will likely go to President Donald Trump by default."
+SC,2020-02-29,primary,"South Carolina will not hold a Republican presidential primary, meaning its 50 delegates will likely go to President Donald Trump by default."
+UT,2020-03-03,primary,Unregistered voters may register at the polls and cast a provisional ballot.
+VA,2020-03-03,primary,"Virginia will not hold a Republican presidential primary, meaning its 49 delegates will likely go to President Donald Trump by default."
+ID,2020-03-10,primary,"A December 2019 opinion by Idaho's attorney general found that unlike in other primary elections, voters in presidential primaries may change party affiliation through election day. Voters may register in advance through Feb. 14, 2020, or in person on election day."
+ND,2020-03-10,firehouse-caucus,"North Dakota will not hold a Republican presidential primary, meaning its 29 delegates will likely go to President Donald Trump by default."
+MI,2020-03-10,primary,"Voters may register in advance through Feb. 24, 2020, or in person with ""local clerks"" through election day."
+WA,2020-03-10,primary,"Voters may register online or by mail through March 2, 2020, or in person through election day. Mailed registrations must be received by an election official (not postmarked) by March 2."
+AZ,2020-03-17,primary,"Arizona will not hold a Republican presidential primary, meaning its 58 delegates will likely go to President Donald Trump by default."
+IL,2020-03-17,primary,"Regular voter registration ends Feb. 18, 2020. Voters may register online through March 1, 2020, and in person through election day."
+AK,2020-04-04,primary,"Alaska will not hold a Republican presidential primary, meaning its 28 delegates will likely go to President Donald Trump by default."
+LA,2020-04-04,primary,"Voters may register in person or by mail by March 4, 2020 and online by March 14, 2020."
+WI,2020-04-07,primary,"Voters may register online or by mail through March 18, 2020, or in person through election day."
+NE,2020-05-12,primary,"Voters may register online or by mail through April 24, 2020, or in person at county clerks' offices through May 1, 2020."
+ID,2020-05-19,primary,"Voters may register in advance through April 28, 2020, or in person on election day."
+ND,2020-06-09,primary,North Dakota does not require voters to register with the state.
+MI,2020-08-04,primary,"Voters may register in advance through July 20, 2020, or in person with ""local clerks"" through election day."
+WA,2020-08-04,primary,"Voters may register online or by mail through July 27, 2020, or in person through election day. Mailed registrations must be received by an election official (not postmarked) by July 27."
+HI,2020-08-08,primary,"Voters may register online or by mail through July 9, 2020, or in person at the polls on election day."
+WI,2020-08-11,primary,"Voters may register online or by mail through July 22, 2020, or in person through election day."
+NH,2020-09-08,primary,"Voters may change their party affiliation before June 2, 2020 to vote in a different party's primary."
+LA,2020-11-03,primary,"Voters may register in person or by mail by Oct. 5, 2020 and online by Oct. 13, 2020."
