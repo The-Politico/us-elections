@@ -27,6 +27,7 @@ from elections.models.seats import HeadOfGovernmentSeat
 from elections.models.seats import HouseSeat
 from elections.models.seats import SenateSeat
 from elections.models.parties import Party
+from elections.utils.alternative_areas import alternative_areas
 from elections.utils.getters import get_party
 from elections.utils.builts import ChamberFilterableList
 from elections.utils.builts import ElectionTypeFilterableList
@@ -290,8 +291,15 @@ class ElectionYear(object):
 
         return ElectionTypeFilterableList(sorted_elections)
 
-    def elections_for_state(self, state):
-        state = us.states.lookup(state)
+    def elections_for_state(self, state_name_raw):
+        state = us.states.lookup(state_name_raw)
+
+        if not state:
+            state = alternative_areas.get(state_name_raw, None)
+
+        if not state:
+            raise ValueError(f'No state found for query "{state_name_raw}".')
+
         return ElectionTypeFilterableList(
             [
                 election
