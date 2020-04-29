@@ -42,7 +42,7 @@ setup(
     platforms=["any"],
     package_data={"elections": ["data/**/*.pkl", "data/*.pkl"]},
     include_package_data=True,
-    install_requires=["us"],
+    install_requires=["us>=1,<2"],
     zip_safe=False,
     extras_require={"test": ["pytest"]},
 )
