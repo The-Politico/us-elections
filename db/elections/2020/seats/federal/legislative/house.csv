@@ -44,7 +44,7 @@ CA,21,FALSE,"Cox, TJ",dem
 CA,22,FALSE,"Nunes, Devin",gop
 CA,23,FALSE,"McCarthy, Kevin",gop
 CA,24,FALSE,"Carbajal, Salud",dem
-CA,25,FALSE,"Hill, Katie",dem
+CA,25,FALSE,"Garcia, Mike",gop
 CA,26,FALSE,"Brownley, Julia",dem
 CA,27,FALSE,"Chu, Judy",dem
 CA,28,FALSE,"Schiff, Adam",dem
@@ -69,7 +69,7 @@ CA,46,FALSE,"Correa, Lou",dem
 CA,47,FALSE,"Lowenthal, Alan",dem
 CA,48,FALSE,"Rouda, Harley",dem
 CA,49,FALSE,"Levin, Mike",dem
-CA,50,FALSE,"Hunter, Duncan",gop
+CA,50,FALSE,,
 CA,51,FALSE,"Vargas, Juan",dem
 CA,52,FALSE,"Peters, Scott",dem
 CA,53,FALSE,"Davis, Susan",dem
@@ -112,7 +112,7 @@ FL,23,FALSE,"Wasserman Schultz, Debbie",dem
 FL,24,FALSE,"Wilson, Frederica",dem
 FL,25,FALSE,"Diaz-Balart, Mario",gop
 FL,26,FALSE,"Mucarsel-Powell, Debbie",dem
-FL,27,FALSE,"Shalala, Donna ",dem
+FL,27,FALSE,"Shalala, Donna",dem
 GA,1,FALSE,"Carter, Buddy",gop
 GA,2,FALSE,"Bishop, Sanford",dem
 GA,3,FALSE,"Ferguson, Drew",gop
@@ -193,7 +193,7 @@ MD,3,FALSE,"Sarbanes, John",dem
 MD,4,FALSE,"Brown, Anthony",dem
 MD,5,FALSE,"Hoyer, Steny",dem
 MD,6,FALSE,"Trone, David",dem
-MD,7,FALSE,"Cummings, Elijah",dem
+MD,7,FALSE,"Mfume, Kweisi",dem
 MD,8,FALSE,"Raskin, Jamie",dem
 ME,1,FALSE,"Pingree, Chellie",dem
 ME,2,FALSE,"Golden, Jared",dem
@@ -229,7 +229,7 @@ MO,7,FALSE,"Long, Billy",gop
 MO,8,FALSE,"Smith, Jason",gop
 MS,1,FALSE,"Kelly, Trent",gop
 MS,2,FALSE,"Thompson, Bennie",dem
-MS,3,FALSE,"Guest, Michael ",gop
+MS,3,FALSE,"Guest, Michael",gop
 MS,4,FALSE,"Palazzo, Steven",gop
 MT,,FALSE,"Gianforte, Greg",gop
 NC,1,FALSE,"Butterfield, G.K.",dem
@@ -242,7 +242,7 @@ NC,7,FALSE,"Rouzer, David",gop
 NC,8,FALSE,"Hudson, Richard",gop
 NC,9,FALSE,"Bishop, Dan",gop
 NC,10,FALSE,"McHenry, Patrick",gop
-NC,11,FALSE,"Meadows, Mark",gop
+NC,11,FALSE,,
 NC,12,FALSE,"Adams, Alma",dem
 NC,13,FALSE,"Budd, Ted",gop
 ND,,FALSE,"Armstrong, Kelly",gop
@@ -252,7 +252,7 @@ NE,3,FALSE,"Smith, Adrian",gop
 NH,1,FALSE,"Pappas, Chris",dem
 NH,2,FALSE,"Kuster, Annie",dem
 NJ,1,FALSE,"Norcross, Donald",dem
-NJ,2,FALSE,"Van Drew, Jeff",dem
+NJ,2,FALSE,"Van Drew, Jeff",gop
 NJ,3,FALSE,"Kim, Andy",dem
 NJ,4,FALSE,"Smith, Chris",gop
 NJ,5,FALSE,"Gottheimer, Josh",dem
@@ -266,10 +266,10 @@ NJ,12,FALSE,"Watson Coleman, Bonnie",dem
 NM,1,FALSE,"Haaland, Deb",dem
 NM,2,FALSE,"Torres Smalls, Xochitl",dem
 NM,3,FALSE,"Lujan, Ben",dem
-NV,2,FALSE,"Titus, Dina",dem
-NV,1,FALSE,"Amodei, Mark",gop
-NV,3,FALSE,"Lee, Susie ",dem
-NV,4,FALSE,"Horsford, Stephen ",dem
+NV,1,FALSE,"Titus, Dina",dem
+NV,2,FALSE,"Amodei, Mark",gop
+NV,3,FALSE,"Lee, Susie",dem
+NV,4,FALSE,"Horsford, Stephen",dem
 NY,1,FALSE,"Zeldin, Lee",gop
 NY,2,FALSE,"King, Peter",gop
 NY,3,FALSE,"Suozzi, Tom",dem
@@ -296,7 +296,7 @@ NY,23,FALSE,"Reed, Tom",gop
 NY,24,FALSE,"Katko, John",gop
 NY,25,FALSE,"Morelle, Joe",dem
 NY,26,FALSE,"Higgins, Brian",dem
-NY,27,FALSE,"Collins, Chris",gop
+NY,27,FALSE,,
 OH,1,FALSE,"Chabot, Steve",gop
 OH,2,FALSE,"Wenstrup, Brad",gop
 OH,3,FALSE,"Beatty, Joyce",dem
@@ -327,7 +327,7 @@ PA,1,FALSE,"Fitzpatrick, Brian",gop
 PA,2,FALSE,"Boyle, Brendan",dem
 PA,3,FALSE,"Evans, Dwight",dem
 PA,4,FALSE,"Dean, Madeleine",dem
-PA,5,FALSE,"Gay Scanlon, Mary ",dem
+PA,5,FALSE,"Gay Scanlon, Mary",dem
 PA,6,FALSE,"Houlahan, Chrissy",dem
 PA,7,FALSE,"Wild, Susan",dem
 PA,8,FALSE,"Cartwright, Matt",dem
@@ -363,7 +363,7 @@ TN,9,FALSE,"Cohen, Steve",dem
 TX,1,FALSE,"Gohmert, Louie",gop
 TX,2,FALSE,"Crenshaw, Dan",gop
 TX,3,FALSE,"Taylor, Van",gop
-TX,4,FALSE,"Ratcliffe, John",gop
+TX,4,FALSE,,
 TX,5,FALSE,"Gooden, Lance",gop
 TX,6,FALSE,"Wright, Ron",gop
 TX,7,FALSE,"Fletcher, Lizzie",dem
@@ -404,16 +404,16 @@ VA,1,FALSE,"Wittman, Rob",gop
 VA,2,FALSE,"Luria, Elaine",dem
 VA,3,FALSE,"Scott, Bobby",dem
 VA,4,FALSE,"McEachin, Donald",dem
-VA,5,FALSE,"Riggleman, Denver ",gop
-VA,6,FALSE,"Cline, Ben ",gop
+VA,5,FALSE,"Riggleman, Denver",gop
+VA,6,FALSE,"Cline, Ben",gop
 VA,7,FALSE,"Spanberger, Abigail",dem
 VA,8,FALSE,"Beyer, Don",dem
 VA,9,FALSE,"Griffith, Morgan",gop
 VA,10,FALSE,"Wexton, Jennifer",dem
 VA,11,FALSE,"Connolly, Gerry",dem
 VT,,FALSE,"Welch, Peter",dem
-WA,2,FALSE,"DelBene, Suzan",dem
-WA,1,FALSE,"Larsen, Rick",dem
+WA,1,FALSE,"DelBene, Suzan",dem
+WA,2,FALSE,"Larsen, Rick",dem
 WA,3,FALSE,"Herrera Beutler, Jaime",gop
 WA,4,FALSE,"Newhouse, Dan",gop
 WA,5,FALSE,"McMorris Rodgers, Cathy",gop
@@ -428,9 +428,9 @@ WI,3,FALSE,"Kind, Ron",dem
 WI,4,FALSE,"Moore, Gwen",dem
 WI,5,FALSE,"Sensenbrenner, Jim",gop
 WI,6,FALSE,"Grothman, Glenn",gop
-WI,7,FALSE,"Duffy, Sean",gop
+WI,7,FALSE,"Tiffany, Tom",gop
 WI,8,FALSE,"Gallagher, Mike",gop
 WV,1,FALSE,"McKinley, David",gop
 WV,2,FALSE,"Mooney, Alex",gop
-WV,3,FALSE,"Miller, Carol ",gop
+WV,3,FALSE,"Miller, Carol",gop
 WY,,FALSE,"Cheney, Liz",gop
