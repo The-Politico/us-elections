@@ -117,7 +117,7 @@ GA,1,FALSE,"Carter, Buddy",gop
 GA,2,FALSE,"Bishop, Sanford",dem
 GA,3,FALSE,"Ferguson, Drew",gop
 GA,4,FALSE,"Johnson, Hank",dem
-GA,5,FALSE,"Lewis, John",dem
+GA,5,FALSE,,
 GA,6,FALSE,"McBath, Lucy",dem
 GA,7,FALSE,"Woodall, Rob",gop
 GA,8,FALSE,"Scott, Austin",gop
@@ -126,7 +126,7 @@ GA,10,FALSE,"Hice, Jody",gop
 GA,11,FALSE,"Loudermilk, Barry",gop
 GA,12,FALSE,"Allen, Rick",gop
 GA,13,FALSE,"Scott, David",dem
-GA,14,FALSE,"Graves, Tom",gop
+GA,14,FALSE,,
 HI,1,FALSE,"Case, Ed",dem
 HI,2,FALSE,"Gabbard, Tulsi",dem
 IA,1,FALSE,"Finkenauer, Abby",dem
@@ -296,7 +296,7 @@ NY,23,FALSE,"Reed, Tom",gop
 NY,24,FALSE,"Katko, John",gop
 NY,25,FALSE,"Morelle, Joe",dem
 NY,26,FALSE,"Higgins, Brian",dem
-NY,27,FALSE,,
+NY,27,FALSE,"Jacobs, Chris",gop
 OH,1,FALSE,"Chabot, Steve",gop
 OH,2,FALSE,"Wenstrup, Brad",gop
 OH,3,FALSE,"Beatty, Joyce",dem
