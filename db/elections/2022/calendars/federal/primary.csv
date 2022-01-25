@@ -19,7 +19,7 @@ election_date,state,election_type,status,in_person_poll_open_times,in_person_pol
 2022-05-24,GA,partyPrimary,planned,2022-05-24T11:00:00.000Z,2022-05-24T23:00:00.000Z,
 2022-05-24,TX,partyPrimaryRunoff,ifNeeded,2022-05-24T12:00:00.000Z (areas in Central Time Zone [most of state]) / 2022-05-24T13:00:00.000Z (areas in Mountain Time Zone),2022-05-25T00:00:00.000Z (areas in Central Time Zone [most of state]) / 2022-05-25T01:00:00.000Z (areas in Mountain Time Zone),
 2022-06-07,CA,openBlanketPrimary,planned,2022-06-07T14:00:00.000Z,2022-06-08T03:00:00.000Z,
-2022-06-07,CA,majorityElectsRunoff,ifNeeded,2022-06-07T14:00:00.000Z,2022-06-08T03:00:00.000Z,
+2022-06-07,CA,majorityElectsSecondary,ifNeeded,2022-06-07T14:00:00.000Z,2022-06-08T03:00:00.000Z,
 2022-06-07,IA,partyPrimary,planned,2022-06-07T12:00:00.000Z,2022-06-08T01:00:00.000Z,
 2022-06-07,MS,partyPrimary,planned,2022-06-07T12:00:00.000Z,2022-06-08T00:00:00.000Z,
 2022-06-07,MT,partyPrimary,planned,2022-06-07T13:00:00.000Z,2022-06-08T02:00:00.000Z,
